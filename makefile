@@ -1,4 +1,4 @@
-.PHONY: build-fetchbib run-fetchbib build-fetchlex run-fetchlex build run
+.PHONY: build-fetchbib run-fetchbib build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run
 
 # Build fetchbib
 build-fetchbib:
@@ -16,9 +16,16 @@ build-fetchlex:
 run-fetchlex:
 	cargo run --package fetchlex
 
+# Build parsenouns
+build-parsenouns:
+	poetry install
+
+# Run parsenouns
+run-parsenouns:
+	poetry run parsenouns
+
 # Build all applications
-build:
-	cargo build --all
+build: build-fetchbib build-fetchlex build-parsenouns
 
 # Run all applications (sequential)
-run: run-fetchbib run-fetchlex
+run: run-fetchbib run-fetchlex run-parsenouns

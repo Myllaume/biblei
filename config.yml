@@ -3,3 +3,7 @@ lex_output: ./assets/lexique.csv
 
 bib_url: https://api.zotero.org/groups/6284894/items?format=csljson
 bib_output: ./assets/bib.json
+
+record_file: ../mastei-notes/dates.yml
+
+nouns_output: ./assets/nouns.csv

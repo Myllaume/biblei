@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "parsenouns"
+version = "0.1.0"
+description = "Parse biblical nouns"
+authors = ["Myllaume <guillaume.brioudes@myllaume.fr>"]
+readme = "README.md"
+packages = [{include = "parsenouns"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.scripts]
+parsenouns = "parsenouns.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

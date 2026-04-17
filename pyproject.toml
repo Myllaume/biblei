@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "biblei"
+version = "0.1.0"
+description = "Biblical text processing tools"
+authors = ["Myllaume <guillaume.brioudes@myllaume.fr>"]
+readme = "README.md"
+packages = [
+    {include = "parsenouns", from = "apps"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+spacy = "^3.7"
+pyyaml = "^6.0"
+
+[tool.poetry.scripts]
+parsenouns = "parsenouns.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pyright]
+include = ["apps"]
+typeCheckingMode = "strict"
+
+[dependency-groups]
+dev = [
+    "pyright (>=1.1.408,<2.0.0)"
+]
