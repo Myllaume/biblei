@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "apps/fetchbib",
+    "apps/fetchlex",
+]
+resolver = "2"
