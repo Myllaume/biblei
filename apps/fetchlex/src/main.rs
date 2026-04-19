@@ -88,6 +88,7 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
     let mut total_rows = 0;
     let mut written_rows = 0;
     let mut error_rows = 0;
+    let mut last_ortho = String::new();
 
     // Traiter chaque ligne
     for result in csv_reader.records() {
@@ -122,8 +123,13 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
         }
 
         let ortho_lower = ortho.to_lowercase();
+        if ortho_lower == last_ortho {
+            continue;
+        }
+
         let lemme_lower = lemme.to_lowercase();
         csv_writer.write_record(&[&lemme_lower, &ortho_lower])?;
+        last_ortho = ortho_lower;
         written_rows += 1;
 
         if written_rows % 10000 == 0 {
