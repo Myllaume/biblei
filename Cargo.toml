@@ -2,5 +2,6 @@
 members = [
     "apps/fetchbib",
     "apps/fetchlex",
+    "apps/filltag",
 ]
 resolver = "2"

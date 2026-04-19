@@ -6,28 +6,29 @@ init:
 build-fetchbib:
 	cargo build --package fetchbib
 
-# Run fetchbib
 run-fetchbib:
 	cargo run --package fetchbib
 
-# Build fetchlex
 build-fetchlex:
 	cargo build --package fetchlex
 
-# Run fetchlex
 run-fetchlex:
 	cargo run --package fetchlex
 
-# Build parsenouns
+build-filltag:
+	cargo build --package filltag
+
+run-filltag:
+	cargo run --package filltag
+
 build-parsenouns:
 	poetry install
 
-# Run parsenouns
 run-parsenouns:
 	poetry run parsenouns
 
 # Build all applications
-build: build-fetchbib build-fetchlex build-parsenouns
+build: build-fetchbib build-fetchlex build-filltag build-parsenouns
 
 # Run all applications (sequential)
-run: run-fetchbib run-fetchlex run-parsenouns
+run: run-fetchbib run-fetchlex run-filltag run-parsenouns

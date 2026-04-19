@@ -6,5 +6,9 @@ bib_url: https://api.zotero.org/groups/6284894/items?format=csljson
 bib_output: ./assets/bib.json
 
 record_file: ../mastei-notes/dates.yml
+tag_file: ../mastei-notes/dict.yml
 
 nouns_output: ./assets/nouns.csv
+
+tag_output: ./assets/tags.json
+tag_match: ./dist/tag_match.csv
