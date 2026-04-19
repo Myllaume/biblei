@@ -97,7 +97,7 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
     let mut csv_writer = csv::Writer::from_writer(&mut output_file);
 
     // Écrire l'en-tête
-    csv_writer.write_record(&["ortho", "lemme", "cgram"])?;
+    csv_writer.write_record(&["lemme", "ortho"])?;
 
     let mut total_rows = 0;
     let mut written_rows = 0;
@@ -105,33 +105,43 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
 
     // Traiter chaque ligne
     for result in csv_reader.records() {
-        match result {
-            Ok(record) => {
-                total_rows += 1;
+        let Ok(record) = result else {
+            eprintln!("Erreur lors de la lecture d'une ligne : {}", result.unwrap_err());
+            errors += 1;
+            continue;
+        };
 
-                if let (Some(ortho), Some(lemme), Some(cgram)) = (
-                    record.get(col_ortho),
-                    record.get(col_lemme),
-                    record.get(col_cgram),
-                ) {
-                    if LEXIQUE_CATEGORIES.contains(&cgram) {
-                        let ortho_lower = ortho.to_lowercase();
-                        let lemme_lower = lemme.to_lowercase();
-                        csv_writer.write_record(&[&ortho_lower, &lemme_lower, cgram])?;
-                        written_rows += 1;
+        total_rows += 1;
 
-                        if written_rows % 10000 == 0 {
-                            println!("  {} lignes écrites", written_rows);
-                        }
-                    }
-                } else {
-                    errors += 1;
-                }
-            }
-            Err(e) => {
-                eprintln!("Erreur lors de la lecture d'une ligne : {}", e);
-                errors += 1;
-            }
+        let (Some(ortho), Some(lemme), Some(cgram)) = (
+            record.get(col_ortho),
+            record.get(col_lemme),
+            record.get(col_cgram),
+        ) else {
+            errors += 1;
+            continue;
+        };
+
+        if ortho.trim().is_empty() || lemme.trim().is_empty() || cgram.trim().is_empty() {
+            errors += 1;
+            continue;
+        }
+
+        if lemme.trim().len() < 3 {
+            continue;
+        }
+
+        if !LEXIQUE_CATEGORIES.contains(&cgram) {
+            continue;
+        }
+
+        let ortho_lower = ortho.to_lowercase();
+        let lemme_lower = lemme.to_lowercase();
+        csv_writer.write_record(&[&lemme_lower, &ortho_lower])?;
+        written_rows += 1;
+
+        if written_rows % 10000 == 0 {
+            println!("  {} lignes écrites", written_rows);
         }
     }
 
