@@ -1,5 +1,6 @@
 lex_url: http://www.lexique.org/databases/Lexique383/Lexique383.tsv
 lex_output: ./assets/lexique.csv
+lex_error: ./dist/lex_errors.csv
 
 bib_url: https://api.zotero.org/groups/6284894/items?format=csljson
 bib_output: ./assets/bib.json

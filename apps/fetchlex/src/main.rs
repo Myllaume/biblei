@@ -7,6 +7,7 @@ use std::io::BufReader;
 struct Config {
     lex_url: String,
     lex_output: String,
+    lex_error: String,
 }
 
 const LEXIQUE_CATEGORIES: &[&str] = &["NOM", "ADJ"];
@@ -15,23 +16,6 @@ fn load_config(config_path: &str) -> Result<Config> {
     let config_content = std::fs::read_to_string(config_path)?;
     let config: Config = serde_yaml::from_str(&config_content)?;
     Ok(config)
-}
-
-fn check_output_dir_exists(config: &Config) -> Result<()> {
-    let output_dir = std::path::Path::new(&config.lex_output)
-        .parent()
-        .ok_or_else(|| anyhow::anyhow!("Impossible de déterminer le répertoire de sortie"))?;
-
-    if !output_dir.exists() {
-        std::fs::create_dir_all(output_dir)?;
-        println!("✓ Répertoire de sortie créé : {}", output_dir.display());
-    } else {
-        println!(
-            "✓ Répertoire de sortie existe déjà : {}",
-            output_dir.display()
-        );
-    }
-    Ok(())
 }
 
 fn download_file(url: &str) -> Result<BufReader<reqwest::blocking::Response>> {
@@ -95,19 +79,21 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
     // Ouvrir le fichier CSV de sortie
     let mut output_file = File::create(&config.lex_output)?;
     let mut csv_writer = csv::Writer::from_writer(&mut output_file);
-
-    // Écrire l'en-tête
     csv_writer.write_record(&["lemme", "ortho"])?;
+
+    let mut error_file = File::create(&config.lex_error)?;
+    let mut error_writer = csv::Writer::from_writer(&mut error_file);
+    error_writer.write_record(&["line", "error"])?;
 
     let mut total_rows = 0;
     let mut written_rows = 0;
-    let mut errors = 0;
+    let mut error_rows = 0;
 
     // Traiter chaque ligne
     for result in csv_reader.records() {
         let Ok(record) = result else {
-            eprintln!("Erreur lors de la lecture d'une ligne : {}", result.unwrap_err());
-            errors += 1;
+            error_writer.write_record(&[total_rows.to_string(), "ReadError".to_string()])?;
+            error_rows += 1;
             continue;
         };
 
@@ -118,12 +104,12 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
             record.get(col_lemme),
             record.get(col_cgram),
         ) else {
-            errors += 1;
+            error_writer.write_record(&[total_rows.to_string(), "MissingFields".to_string()])?;
+            error_rows += 1;
             continue;
         };
 
         if ortho.trim().is_empty() || lemme.trim().is_empty() || cgram.trim().is_empty() {
-            errors += 1;
             continue;
         }
 
@@ -150,9 +136,7 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
     println!("\n--- Résumé du traitement ---");
     println!("Total de lignes lues : {}", total_rows);
     println!("Lignes écrites : {}", written_rows);
-    if errors > 0 {
-        println!("Erreurs : {}", errors);
-    }
+    println!("Erreurs : {}", error_rows);
     println!("Fichier créé : {}", config.lex_output);
 
     Ok(())
@@ -160,8 +144,6 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
 
 fn main() -> Result<()> {
     let config = load_config("./config.yml")?;
-
-    check_output_dir_exists(&config)?;
 
     if let Err(e) = validate_and_process_lexique(config) {
         eprintln!("\n✗ Échec : {}", e);
