@@ -1,0 +1,11 @@
+# Maximum line width
+max_width = 80
+
+# Indentation: 2 spaces (no tabs)
+tab_spaces = 2
+
+# Imports: finer granularity
+imports_granularity = "Module"
+
+# Comments width
+comment_width = 80

@@ -1,4 +1,4 @@
-.PHONY: build-fetchbib run-fetchbib build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run
+.PHONY: build-fetchbib run-fetchbib build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run format
 
 init:
 	./apps/init.sh
@@ -36,3 +36,8 @@ run: run-fetchbib run-fetchlex run-filltag run-parsenouns
 # Run E2E tests (requires: cargo build + poetry install)
 test: build
 	poetry run pytest -v
+
+# Format all code (Rust + Python)
+format:
+	cargo fmt --all
+	poetry run ruff format
