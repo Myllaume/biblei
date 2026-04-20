@@ -1,0 +1,29 @@
+[
+  {
+    "url": "chapoutot",
+    "title": "Chapoutot",
+    "alias": [],
+    "tags": ["nazisme"],
+    "description": "Historien specialiste du nazisme (Chapoutot2020 p.141-143).",
+    "fulltext": "chapoutot historien specialiste du nazisme (chapoutot2020 p.141-143).",
+    "dates": [],
+    "quotes": [{"key": "Chapoutot2020", "pages": [141, 142, 143]}],
+    "links": [],
+    "backlinks": ["blitzkrieg"]
+  },
+  {
+    "url": "blitzkrieg",
+    "title": "Blitzkrieg",
+    "alias": [],
+    "tags": ["militaire"],
+    "description": "Strategie militaire (Black2020 p.50, p.52 ; Chapoutot2020 p.615).",
+    "fulltext": "blitzkrieg strategie militaire (black2020 p.50, p.52 ; chapoutot2020 p.615).",
+    "dates": [],
+    "quotes": [
+      {"key": "Black2020", "pages": [50, 52]},
+      {"key": "Chapoutot2020", "pages": [615]}
+    ],
+    "links": ["chapoutot"],
+    "backlinks": []
+  }
+]

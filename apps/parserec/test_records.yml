@@ -1,0 +1,12 @@
+- title: Gouvernement britannique
+  description: Le gouvernement est une institution politique importante
+  
+- title: Révolution française
+  alias:
+    - Revolution 1789
+  description: Un événement majeur avec des révolutionnaires
+  tags:
+    - histoire
+
+- title: Philosophie marxiste
+  description: Le marxisme et les marxistes ont influencé le socialisme

@@ -1,0 +1,26 @@
+[
+  {
+    "url": "austerlitz",
+    "title": "Austerlitz",
+    "alias": [],
+    "tags": ["militaire"],
+    "description": "Victoire de Napoleon en 1805, bataille decisive.",
+    "fulltext": "austerlitz victoire de napoleon en 1805, bataille decisive.",
+    "dates": [[1805]],
+    "quotes": [],
+    "links": ["napoleon"],
+    "backlinks": ["napoleon"]
+  },
+  {
+    "url": "napoleon",
+    "title": "Napoleon",
+    "alias": ["Bonaparte"],
+    "tags": [],
+    "description": "Conquerant d Austerlitz.",
+    "fulltext": "napoleon conquerant d austerlitz.",
+    "dates": [],
+    "quotes": [],
+    "links": ["austerlitz"],
+    "backlinks": ["austerlitz"]
+  }
+]

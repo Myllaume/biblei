@@ -1,0 +1,7 @@
+- title: Austerlitz
+  description: Victoire de Napoleon en 1805, bataille decisive.
+
+- title: Napoleon
+  alias:
+    - Bonaparte
+  description: Conquerant d Austerlitz.
