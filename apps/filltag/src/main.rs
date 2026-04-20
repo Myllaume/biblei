@@ -108,7 +108,10 @@ fn main() -> Result<()> {
 
     let matched = tag_match_rows.iter().filter(|(_, m)| *m).count();
     let total = tag_match_rows.len();
-    println!("\nRésumé : {}/{} mots-clés trouvés dans le lexique", matched, total);
+    println!(
+        "\nRésumé : {}/{} mots-clés trouvés dans le lexique",
+        matched, total
+    );
 
     Ok(())
 }
