@@ -2,7 +2,7 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::File;
-use unicode_normalization::UnicodeNormalization;
+use unidecode::unidecode;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Config {
@@ -18,10 +18,8 @@ fn load_config(config_path: &str) -> Result<Config> {
     Ok(config)
 }
 
-/// Normalise une chaîne : NFD → filtre ASCII → lowercase
-/// Ex : "Français" → "francais"
 fn normalize(s: &str) -> String {
-    s.nfd().filter(|c| c.is_ascii()).collect::<String>().to_lowercase()
+    unidecode(s).to_lowercase()
 }
 
 /// Charge le lexique CSV (colonnes : lemme, ortho)
@@ -76,13 +74,14 @@ fn main() -> Result<()> {
     let mut tag_match_rows: Vec<(String, bool)> = Vec::new();
 
     for (category, keywords) in &tags {
-        let mut forms: Vec<String> = vec![category.clone()];
+        let mut forms: Vec<String> = vec![normalize(category)];
         for keyword in keywords {
             let norm = normalize(keyword);
             if let Some(orthos) = lexique.get(&norm) {
-                forms.extend(orthos.clone());
+                forms.extend(orthos.iter().map(|o| normalize(o)));
                 tag_match_rows.push((keyword.clone(), true));
             } else {
+                forms.push(norm);
                 tag_match_rows.push((keyword.clone(), false));
             }
         }
