@@ -32,3 +32,7 @@ build: build-fetchbib build-fetchlex build-filltag build-parsenouns
 
 # Run all applications (sequential)
 run: run-fetchbib run-fetchlex run-filltag run-parsenouns
+
+# Run E2E tests (requires: cargo build + poetry install)
+test: build
+	poetry run pytest -v

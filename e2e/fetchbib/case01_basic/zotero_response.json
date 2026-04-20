@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "id": "ABCD1234",
+      "type": "book",
+      "title": "Introduction à l'exégèse",
+      "author": [
+        { "family": "Dupont", "given": "Jean" }
+      ],
+      "issued": { "date-parts": [[2020]] },
+      "publisher": "Cerf",
+      "language": "fr"
+    }
+  ]
+}
