@@ -1,4 +1,4 @@
-.PHONY: build-fetchbib run-fetchbib build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run format
+.PHONY: build-fetchbib run-fetchbib test-fetchbib build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run format
 
 init:
 	./apps/init.sh
@@ -8,6 +8,9 @@ build-fetchbib:
 
 run-fetchbib:
 	cargo run --package fetchbib
+
+test-fetchbib:
+	cargo test --package fetchbib
 
 build-fetchlex:
 	cargo build --package fetchlex

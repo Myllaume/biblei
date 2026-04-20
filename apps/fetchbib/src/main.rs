@@ -5,6 +5,9 @@ use std::fs::File;
 use std::io::Write;
 use validator::Validate;
 
+mod gen_id;
+use gen_id::gen_id;
+
 #[derive(Debug, Serialize, Deserialize)]
 struct Config {
   bib_url: String,
@@ -75,20 +78,6 @@ pub struct ZoteroItem {
 
   #[serde(rename = "type")]
   pub item_type: String,
-}
-
-fn gen_id(zotero_item: &Value) -> Option<String> {
-  let first_author_family =
-    zotero_item.get("author")?.get(0)?.get("family")?.as_str()?;
-
-  let year = zotero_item
-    .get("issued")?
-    .get("date-parts")?
-    .get(0)?
-    .get(0)?
-    .as_i64()?;
-
-  Some(format!("{}{}", first_author_family, year))
 }
 
 fn convert_to_zotero_item(raw_item: &Value) -> Result<ZoteroItem> {
