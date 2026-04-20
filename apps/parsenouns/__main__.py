@@ -13,7 +13,7 @@ from spacy.tokens import Token
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 IGNORED_NOUNS = {"description", "title"}
 
 NAME_YEAR_REGEX = r"^[a-z]+\d{4}$"
-PAGE_REGEX= r"^p.\d+$"
+PAGE_REGEX = r"^p.\d+$"
 
 
 def main():
@@ -76,7 +76,9 @@ def main():
     with nouns_output.open("w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["noun", "count"])
-        for noun, count in sorted(counts.items(), key=lambda x: x[1], reverse=True):
+        for noun, count in sorted(
+            counts.items(), key=lambda x: x[1], reverse=True
+        ):
             writer.writerow([noun, count])
 
     logger.info(f"{len(counts)} noms écrits dans {nouns_output}")

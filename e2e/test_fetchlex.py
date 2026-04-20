@@ -5,6 +5,7 @@ pytest-httpserver sert le fichier TSV de fixture en local.
 Le binaire Rust lit les headers HTTP et streame le body — comportement identique
 à une vraie requête, sans aucune modification du code.
 """
+
 import csv
 import subprocess
 from pathlib import Path
@@ -15,7 +16,13 @@ from pytest_httpserver import HTTPServer
 from conftest import FETCHLEX_BIN, FIXTURES
 
 
-CASES = sorted([d for d in (FIXTURES / "fetchlex").iterdir() if d.is_dir() and d.name.startswith("case")])
+CASES = sorted(
+    [
+        d
+        for d in (FIXTURES / "fetchlex").iterdir()
+        if d.is_dir() and d.name.startswith("case")
+    ]
+)
 
 
 @pytest.mark.parametrize("case", CASES, ids=[c.name for c in CASES])

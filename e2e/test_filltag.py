@@ -4,6 +4,7 @@ filltag est une transformation pure fichier→fichier (pas de HTTP).
 Le test génère un config.yml temporaire pointant vers les fixtures,
 lance le binaire compilé, et compare les sorties avec les fichiers attendus.
 """
+
 import csv
 import json
 import subprocess
@@ -14,7 +15,13 @@ import pytest
 from conftest import FILLTAG_BIN, FIXTURES
 
 
-CASES = sorted([d for d in (FIXTURES / "filltag").iterdir() if d.is_dir() and d.name.startswith("case")])
+CASES = sorted(
+    [
+        d
+        for d in (FIXTURES / "filltag").iterdir()
+        if d.is_dir() and d.name.startswith("case")
+    ]
+)
 
 
 @pytest.mark.parametrize("case", CASES, ids=[c.name for c in CASES])

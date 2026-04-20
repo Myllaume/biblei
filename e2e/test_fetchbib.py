@@ -5,6 +5,7 @@ pytest-httpserver démarre un vrai serveur local sur localhost.
 Le config.yml de test pointe bib_url vers ce serveur.
 Le binaire Rust ne sait pas qu'il parle à un mock — aucune modification du code.
 """
+
 import json
 import subprocess
 from pathlib import Path
@@ -15,7 +16,13 @@ from pytest_httpserver import HTTPServer
 from conftest import FETCHBIB_BIN, FIXTURES
 
 
-CASES = sorted([d for d in (FIXTURES / "fetchbib").iterdir() if d.is_dir() and d.name.startswith("case")])
+CASES = sorted(
+    [
+        d
+        for d in (FIXTURES / "fetchbib").iterdir()
+        if d.is_dir() and d.name.startswith("case")
+    ]
+)
 
 
 @pytest.mark.parametrize("case", CASES, ids=[c.name for c in CASES])
@@ -52,7 +59,9 @@ def test_fetchbib(case: Path, tmp_path: Path, httpserver: HTTPServer) -> None:
     assert result.returncode == 0, f"fetchbib a échoué:\n{result.stderr}"
 
     actual = json.loads((tmp_path / "bib.json").read_text(encoding="utf-8"))
-    expected = json.loads((case / "expected_bib.json").read_text(encoding="utf-8"))
+    expected = json.loads(
+        (case / "expected_bib.json").read_text(encoding="utf-8")
+    )
 
     # Comparaison insensible à l'ordre des clés JSON (serde_json::to_string_pretty
     # peut varier) — on compare item par item en se basant sur l'id
