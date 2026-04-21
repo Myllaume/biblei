@@ -1,4 +1,4 @@
-.PHONY: build-fetchbib run-fetchbib test-fetchbib test-parserec build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run format run-parserec build-parserec
+.PHONY: build-fetchbib run-fetchbib test-fetchbib test-parserec build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run format run-parserec build-parserec run-viztime lint build-viztime
 
 init:
 	./apps/init.sh
@@ -39,6 +39,15 @@ build-parsenouns:
 run-parsenouns:
 	poetry run parsenouns
 
+build-viztime:
+	npx esbuild apps/viztime/browser/main.ts --minify --bundle --platform=browser --target=es2020 --format=iife --outfile=dist/viztime/script.js
+	npx esbuild apps/viztime/server/build.ts --minify --bundle --platform=node --target=node18 --format=cjs --outfile=apps/viztime/dist/build.cjs
+	node apps/viztime/dist/build.cjs
+	cp apps/viztime/static/* dist/viztime/
+
+serve-viztime:
+	http-server dist/viztime
+
 # Build all applications
 build: build-fetchbib build-fetchlex build-filltag build-parsenouns build-parserec
 
@@ -53,3 +62,9 @@ test: build
 format:
 	cargo fmt --all
 	poetry run ruff format
+	npx prettier . --write
+
+lint:
+	cargo clippy --all -- -D warnings
+	poetry run ruff check .
+	npx eslint .

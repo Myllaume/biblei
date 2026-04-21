@@ -47,10 +47,11 @@ fn load_tags(path: &str) -> Result<HashMap<String, Vec<String>>> {
 }
 
 fn ensure_parent_dir(path: &str) -> Result<()> {
-  if let Some(dir) = std::path::Path::new(path).parent() {
-    if !dir.as_os_str().is_empty() && !dir.exists() {
-      std::fs::create_dir_all(dir)?;
-    }
+  if let Some(dir) = std::path::Path::new(path).parent()
+    && !dir.as_os_str().is_empty()
+    && !dir.exists()
+  {
+    std::fs::create_dir_all(dir)?;
   }
   Ok(())
 }

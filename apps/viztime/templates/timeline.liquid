@@ -1,0 +1,17 @@
+{% layout 'layout', title: title %}
+{% block content %}
+<h1>{{ title }}</h1>
+<p class="timeline-range">{{ begin }} – {{ end }}</p>
+<ul class="fiche-list">
+  {% for fiche in fiches %}
+  <li class="fiche-item">
+    <span class="fiche-title">{{ fiche.title }}</span>
+    <ul class="fiche-dates">
+      {% for date in fiche.dates %}
+      <li>{{ date }}</li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

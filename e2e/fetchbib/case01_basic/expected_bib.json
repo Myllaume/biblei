@@ -3,9 +3,7 @@
     "id": "Dupont2020",
     "title": "Introduction à l'exégèse",
     "publisher": "Cerf",
-    "author": [
-      { "family": "Dupont", "given": "Jean" }
-    ],
+    "author": [{ "family": "Dupont", "given": "Jean" }],
     "issued": { "date-parts": [[2020]] },
     "language": "fr",
     "type": "book"

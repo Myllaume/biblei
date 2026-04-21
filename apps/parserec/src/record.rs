@@ -77,14 +77,10 @@ impl Record {
 fn gen_fulltext(title: &str, description: &Option<String>) -> String {
   let mut full_text = title.to_string();
   if let Some(desc) = description {
-    full_text.push_str(" ");
+    full_text.push(' ');
     full_text.push_str(desc);
   }
   ascii_lowercase(&full_text)
-}
-
-pub fn load_records(file_path: &str) -> Result<Vec<Record>> {
-  load_records_with_tags(file_path, None, None)
 }
 
 pub fn load_records_with_tags(

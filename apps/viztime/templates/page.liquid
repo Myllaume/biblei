@@ -1,0 +1,11 @@
+{% layout 'layout', title: title %}
+{% block content %}
+<h1>{{ title }}</h1>
+{% if pages %}
+<ul class="page-list">
+  {% for page in pages %}
+  <li><a href="{{ page.slug }}.html">{{ page.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

@@ -3,6 +3,14 @@
 
 .vscode
 
+# Node.js / npm
+node_modules/
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+dist/
+*.tsbuildinfo
+
 # Python
 __pycache__/
 *.py[cod]

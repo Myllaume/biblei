@@ -2,6 +2,7 @@
 members = [
     "apps/fetchbib",
     "apps/fetchlex",
-    "apps/filltag", "apps/parserec",
+    "apps/filltag",
+    "apps/parserec",
 ]
 resolver = "2"

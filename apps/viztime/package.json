@@ -1,0 +1,21 @@
+{
+  "name": "viztime",
+  "version": "1.0.0",
+  "description": "Visualization tool for Bible data",
+  "scripts": {
+    "build:client": "esbuild src/browser/main.ts --bundle --platform=browser --target=es2020 --format=iife --outfile=dist/script.js",
+    "build:server": "esbuild src/server/build.ts --bundle --platform=node --target=node18 --format=cjs --outfile=dist/build.cjs",
+    "build:pages": "node dist/build.cjs",
+    "build": "npm run build:client && npm run build:server && npm run build:pages",
+    "dev:client": "esbuild src/browser/main.ts --bundle --platform=browser --target=es2020 --format=iife --outfile=dist/script.js --watch",
+    "dev:server": "esbuild src/server/build.ts --bundle --platform=node --target=node18 --format=cjs --outfile=dist/build.cjs --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write src templates",
+    "format:check": "prettier --check src templates"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.20",
+    "liquidjs": "^10.0.0"
+  }
+}

@@ -10,7 +10,7 @@ Pour chaque mot-clé de `tag_file`, on cherche une correspondance dans `lex_outp
 
 ### Correspondances
 
-Pour faire correspondre un lemme  de `lex_output` à un mot-clé de `tag_file`, on utilise les règles suivantes :
+Pour faire correspondre un lemme de `lex_output` à un mot-clé de `tag_file`, on utilise les règles suivantes :
 
 - ignore la casse
 - ignore les accents et caractères non-ascii
@@ -22,9 +22,9 @@ Pour faire correspondre un lemme  de `lex_output` à un mot-clé de `tag_file`, 
 
 ```yml
 France:
-    - français
+  - français
 Allemagne:
-    - allemand
+  - allemand
 ```
 
 #### `lex_output` :
@@ -45,8 +45,8 @@ Liste des mots-clés à réutiliser pour l'analyse des fiches.
 
 ```json
 {
-    "France": ["France", "français", "française", "françaises"],
-    "Allemagne": ["Allemagne", "allemand", "allemande", "allemands", "allemandes"]
+  "France": ["France", "français", "française", "françaises"],
+  "Allemagne": ["Allemagne", "allemand", "allemande", "allemands", "allemandes"]
 }
 ```
 

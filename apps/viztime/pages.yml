@@ -1,0 +1,9 @@
+- name: Allemagne 39-45
+  begin: 1939-09-01
+  end: 1945-05-08
+  filters:
+    tags:
+      include:
+        - allemagne
+      exclude:
+        - personne

@@ -11,9 +11,7 @@ import subprocess
 from pathlib import Path
 
 import pytest
-
 from conftest import FILLTAG_BIN, FIXTURES
-
 
 CASES = sorted(
     [
