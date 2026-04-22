@@ -16,8 +16,6 @@ struct Config {
   record_output: String,
   #[serde(default)]
   bib_output: Option<String>,
-  #[serde(default)]
-  tags_file: Option<String>,
 }
 
 fn load_config(config_path: &str) -> Result<Config> {
@@ -31,7 +29,7 @@ fn main() -> Result<()> {
 
   let records = record::load_records_with_tags(
     &config.record_file,
-    config.tags_file.as_deref(),
+    Some(&config.tag_output),
     config.bib_output.as_deref(),
   )?;
 

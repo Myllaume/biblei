@@ -27,10 +27,8 @@ def test_parserec(case: Path, tmp_path: Path) -> None:
     config = (
         f"record_file: {case / 'records.yml'}\n"
         f"record_output: {tmp_path / 'records.json'}\n"
-        f"tags_file: {FIXTURES.parent / 'assets' / 'tags.json'}\n"
+        f"tag_output: {FIXTURES.parent / 'assets' / 'tags.json'}\n"
         f"bib_output: {FIXTURES.parent / 'assets' / 'bib.json'}\n"
-        # Requis par la struct Config mais non utilisé par parserec
-        f"tag_output: unused\n"
     )
     (tmp_path / "config.yml").write_text(config)
 
