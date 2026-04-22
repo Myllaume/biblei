@@ -28,6 +28,7 @@ def test_parsenouns(case: Path, tmp_path: Path) -> None:
     config = (
         f"record_file: {case / 'records.yml'}\n"
         f"nouns_output: {tmp_path / 'nouns.csv'}\n"
+        f"tag_output: {case / 'tags.json'}\n"
     )
     (tmp_path / "config.yml").write_text(config)
 
@@ -39,13 +40,14 @@ def test_parsenouns(case: Path, tmp_path: Path) -> None:
     )
     assert result.returncode == 0, f"parsenouns a échoué:\n{result.stderr}"
 
-    def read_csv_rows(path: Path) -> dict[str, int]:
+    def read_csv_rows(path: Path) -> dict[str, tuple[int, str]]:
         with path.open(newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
-            return {row["noun"]: int(row["count"]) for row in reader}
+            return {
+                row["noun"]: (int(row["count"]), row["is_tag"])
+                for row in reader
+            }
 
     actual = read_csv_rows(tmp_path / "nouns.csv")
     expected = read_csv_rows(case / "exected_nouns.csv")
-    assert actual == expected, (
-        f"Noms attendus: {expected}, obtenus: {actual}"
-    )
+    assert actual == expected, f"Noms attendus: {expected}, obtenus: {actual}"

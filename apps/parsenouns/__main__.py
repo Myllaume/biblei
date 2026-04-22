@@ -1,6 +1,7 @@
 """Main entry point for parsenouns."""
 
 import csv
+import json
 import logging
 import re
 from collections import Counter
@@ -31,6 +32,12 @@ def main():
 
     record_file = Path(config["record_file"])
     nouns_output = Path(config["nouns_output"])
+    tag_output = Path(config["tag_output"])
+
+    logger.info(f"Lecture de {tag_output}")
+    with tag_output.open(encoding="utf-8") as f:
+        tags: dict[str, list[str]] = json.load(f)
+    tag_forms: set[str] = {form for forms in tags.values() for form in forms}
 
     logger.info(f"Lecture de {record_file}")
     text = record_file.read_text(encoding="utf-8")
@@ -75,11 +82,11 @@ def main():
     nouns_output.parent.mkdir(parents=True, exist_ok=True)
     with nouns_output.open("w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["noun", "count"])
+        writer.writerow(["noun", "count", "is_tag"])
         for noun, count in sorted(
             counts.items(), key=lambda x: x[1], reverse=True
         ):
-            writer.writerow([noun, count])
+            writer.writerow([noun, count, str(noun in tag_forms).lower()])
 
     logger.info(f"{len(counts)} noms écrits dans {nouns_output}")
 
