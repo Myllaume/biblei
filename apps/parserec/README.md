@@ -51,7 +51,7 @@ Output : `Chapoutot2023`, `[141]`, `Werth2025`, `[615]`
 
 ```json
 {
-    "politique": ["gouvernement"]
+  "politique": ["gouvernement"]
 }
 ```
 

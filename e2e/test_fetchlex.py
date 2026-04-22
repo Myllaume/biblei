@@ -11,10 +11,8 @@ import subprocess
 from pathlib import Path
 
 import pytest
-from pytest_httpserver import HTTPServer
-
 from conftest import FETCHLEX_BIN, FIXTURES
-
+from pytest_httpserver import HTTPServer
 
 CASES = sorted(
     [
@@ -34,7 +32,8 @@ def test_fetchlex(case: Path, tmp_path: Path, httpserver: HTTPServer) -> None:
         content_type="text/tab-separated-values; charset=utf-8",
     )
 
-    # Fichiers de sortie dans tmp_path (le répertoire doit exister pour lex_error)
+    # Fichiers de sortie dans tmp_path.
+    # Le répertoire doit exister pour lex_error.
     errors_path = tmp_path / "dist" / "lex_errors.csv"
     errors_path.parent.mkdir(parents=True, exist_ok=True)
 

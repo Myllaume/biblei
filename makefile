@@ -1,4 +1,4 @@
-.PHONY: build-fetchbib run-fetchbib test-fetchbib test-parserec build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run format run-parserec build-parserec
+.PHONY: build-fetchbib run-fetchbib test-fetchbib test-parserec build-fetchlex run-fetchlex build-parsenouns run-parsenouns build run format run-parserec build-parserec run-viztime lint build-viztime
 
 init:
 	./apps/init.sh
@@ -53,3 +53,7 @@ test: build
 format:
 	cargo fmt --all
 	poetry run ruff format
+
+lint:
+	cargo clippy --all -- -D warnings
+	poetry run ruff check .

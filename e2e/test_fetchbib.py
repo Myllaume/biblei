@@ -11,10 +11,8 @@ import subprocess
 from pathlib import Path
 
 import pytest
-from pytest_httpserver import HTTPServer
-
 from conftest import FETCHBIB_BIN, FIXTURES
-
+from pytest_httpserver import HTTPServer
 
 CASES = sorted(
     [
@@ -63,8 +61,9 @@ def test_fetchbib(case: Path, tmp_path: Path, httpserver: HTTPServer) -> None:
         (case / "expected_bib.json").read_text(encoding="utf-8")
     )
 
-    # Comparaison insensible à l'ordre des clés JSON (serde_json::to_string_pretty
-    # peut varier) — on compare item par item en se basant sur l'id
+    # Comparaison insensible à l'ordre des clés JSON
+    # (serde_json::to_string_pretty peut varier) — on compare item par item
+    # en se basant sur l'id.
     actual_by_id = {item["id"]: item for item in actual}
     expected_by_id = {item["id"]: item for item in expected}
     assert actual_by_id == expected_by_id

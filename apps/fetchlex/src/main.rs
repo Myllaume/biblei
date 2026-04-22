@@ -79,11 +79,11 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
   // Ouvrir le fichier CSV de sortie
   let mut output_file = File::create(&config.lex_output)?;
   let mut csv_writer = csv::Writer::from_writer(&mut output_file);
-  csv_writer.write_record(&["lemme", "ortho"])?;
+  csv_writer.write_record(["lemme", "ortho"])?;
 
   let mut error_file = File::create(&config.lex_error)?;
   let mut error_writer = csv::Writer::from_writer(&mut error_file);
-  error_writer.write_record(&["line", "error"])?;
+  error_writer.write_record(["line", "error"])?;
 
   let mut total_rows = 0;
   let mut written_rows = 0;
@@ -133,7 +133,7 @@ fn validate_and_process_lexique(config: Config) -> Result<()> {
     }
 
     let lemme_lower = lemme.to_lowercase();
-    csv_writer.write_record(&[&lemme_lower, &ortho_lower])?;
+    csv_writer.write_record([&lemme_lower, &ortho_lower])?;
     last_ortho = ortho_lower;
     written_rows += 1;
 

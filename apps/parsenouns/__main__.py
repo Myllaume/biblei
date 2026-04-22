@@ -2,9 +2,9 @@
 
 import csv
 import logging
+import re
 from collections import Counter
 from pathlib import Path
-import re
 
 import spacy
 import yaml

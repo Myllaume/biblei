@@ -2,7 +2,8 @@
 
 parserec est une transformation pure fichier→fichier (pas de HTTP).
 Le test génère un config.yml temporaire pointant vers les fixtures,
-lance le binaire compilé, et compare la sortie records.json avec le fichier attendu.
+lance le binaire compilé, et compare la sortie records.json avec le
+fichier attendu.
 """
 
 import json
@@ -10,9 +11,7 @@ import subprocess
 from pathlib import Path
 
 import pytest
-
-from conftest import PARSEREC_BIN, FIXTURES
-
+from conftest import FIXTURES, PARSEREC_BIN
 
 CASES = sorted(
     [
@@ -48,7 +47,8 @@ def test_parserec(case: Path, tmp_path: Path) -> None:
         (case / "expected_records.json").read_text(encoding="utf-8")
     )
 
-    # Comparaison insensible à l'ordre des enregistrements — on indexe par url
+    # Comparaison insensible à l'ordre des enregistrements.
+    # On indexe par url.
     actual_by_url = {r["url"]: r for r in actual}
     expected_by_url = {r["url"]: r for r in expected}
     assert set(actual_by_url.keys()) == set(expected_by_url.keys()), (
@@ -62,7 +62,8 @@ def test_parserec(case: Path, tmp_path: Path) -> None:
             assert sorted(actual_record[field]) == sorted(
                 expected_record[field]
             ), (
-                f"[{url}] champ '{field}': attendu {sorted(expected_record[field])}, "
+                f"[{url}] champ '{field}': attendu "
+                f"{sorted(expected_record[field])}, "
                 f"obtenu {sorted(actual_record[field])}"
             )
         # Listes ordonnées : dates, quotes
