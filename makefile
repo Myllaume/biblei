@@ -67,7 +67,11 @@ test:
 	@if [ -z "$(APP)" ]; then echo "Usage: make test APP=<fetchbib|fetchlex|filltag|parserec|parsenouns>"; exit 1; fi
 	@if [ "$(APP)" = "parsenouns" ]; then poetry run pytest -v apps/parsenouns; else cargo test --package $(APP); fi
 
-test-e2e: build
+test-e2e:
+	cargo build --package parserec
+	cargo build --package filltag
+	cargo build --package fetchlex
+	cargo build --package fetchbib
 	poetry run pytest -v
 
 # ── Format & Lint ──────────────────────────────────────────────────────────────
